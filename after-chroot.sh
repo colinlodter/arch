@@ -39,7 +39,12 @@ title Archlinux
 linux /vmlinuz-linux
 initrd /amd-ucode.img
 initrd /initramfs-linux.img
-options rw rd.luks.name=$(lsblk -no TYPE,UUID /dev/nvme0n1p2 | awk '$1=="part"{print $2}')=cryptroot root=/dev/mapper/cryptroot
+options rw rd.luks.name=$(lsblk -no TYPE,UUID /dev/nvme0n1p2 | awk '$1=="crypt"{print $2}')=cryptroot rd.luks.options=discard root=UUID=$(lsblk -no TYPE,UUID /dev/nvme0n1p2 | awk '$1=="part"{print $2}')
+EOF
+
+cat <<EOF > /boot/loader/loader.conf
+default arch.conf
+editor no
 EOF
 
 #bootctl install
