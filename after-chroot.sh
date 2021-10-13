@@ -20,10 +20,14 @@ echo '::1 localhost' >> /etc/hosts
 echo '127.0.1.1 archie' >> /etc/hosts
 
 # Modify mkinitcpio.conf
-sed -i 's/HOOKS=.*/HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt lvm2 filesystems fsck)/g' /etc/mkinitcpio.conf
+sed 's/^HOOKS=.*/HOOKS=(base udev autodetect keyboard keymap consolefont modconf block encrypt lvm2 filesystems fsck)/g' /etc/mkinitcpio.conf
+
+# Setup vconsole.conf and
+echo "KEYMAP=us" > /etc/vconsole.conf
+echo "FONT=ter216n" >> /etc/vconsole.conf
 
 # Create new initramfs (for system encryption)
-mkinitcpio -p
+mkinitcpio -P
 
 # Set root passwd
 passwd
