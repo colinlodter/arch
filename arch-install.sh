@@ -31,7 +31,7 @@ mount /dev/nvme0n1p1 /mnt/boot
 reflector -c US --save /etc/pacman.d/mirrorlist
 
 # Install essential packages
-pacstrap /mnt base linux linux-firmware git vim man-db man-pages grub efibootmgr amd-ucode
+pacstrap /mnt base linux linux-firmware git vim man-db man-pages grub efibootmgr amd-ucode terminus-font
 
 # Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
