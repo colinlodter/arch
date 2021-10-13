@@ -13,12 +13,17 @@ timedatectl set-ntp true
 # Partition the SSD (found at /dev/nvme0n1)
 parted --script /dev/nvme0n1 mkpart ESP fat32 1MiB 512MiB mkpart gpt 513MiB 100%
 
+# Encrypt disk
+cryptsetup -y -v luksFormat /dev/nvme0n1p2
+cryptsetup open /dev/nvme0n1p2 cryptroot
+
+
 # Create filesystems
 mkfs.fat -F32 /dev/nvme0n1p1
-mkfs.ext4 /dev/nvme0n1p2
+mkfs.ext4 /dev/mapper/cryptroot
 
 # Mount file systems
-mount /dev/nvme0n1p2 /mnt
+mount /dev/mapper/cryptroot /mnt
 mkdir /mnt/boot
 mount /dev/nvme0n1p1 /mnt/boot
 
