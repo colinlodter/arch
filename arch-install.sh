@@ -11,7 +11,7 @@ setfont ter-216n
 timedatectl set-ntp true
 
 # Partition the SSD (found at /dev/nvme0n1)
-parted --script /dev/nvme0n1 mkpart ESP fat32 1MiB 512MiB mkpart gpt 513MiB 100%
+parted --script /dev/nvme0n1 mklabel gpt mkpart ESP fat32 1MiB 512MiB mkpart gpt 513MiB 100%
 
 # Encrypt disk
 cryptsetup -y -v luksFormat /dev/nvme0n1p2
