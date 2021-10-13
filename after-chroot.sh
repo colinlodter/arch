@@ -20,7 +20,7 @@ echo '::1 localhost' >> /etc/hosts
 echo '127.0.1.1 archie' >> /etc/hosts
 
 # Modify mkinitcpio.conf
-sed 's/^HOOKS=.*/HOOKS=(base udev autodetect keyboard keymap consolefont modconf block encrypt filesystems fsck)/g' /etc/mkinitcpio.conf
+sed 's/^HOOKS=.*/HOOKS=(base systemd autodetect keyboard keymap consolefont modconf block encrypt filesystems fsck)/g' /etc/mkinitcpio.conf
 
 # Setup vconsole.conf and
 echo "KEYMAP=us" > /etc/vconsole.conf
@@ -39,5 +39,8 @@ title Archlinux
 linux /vmlinuz-linux
 initrd /amd-ucode.img
 initrd /initramfs-linux.img
-options rw rd.luks.name=$(lsblk -no TYPE,UUID /dev/nvmen1p2 | awk '$1=="part"(print $2)')=cryptroot root=/dev/mapper/cryptroot
+options rw rd.luks.name=$(lsblk -no TYPE,UUID /dev/nvme0n1p2 | awk '$1=="part"{print $2}')=cryptroot root=/dev/mapper/cryptroot
 EOF
+
+#bootctl install
+bootctl install
