@@ -27,7 +27,7 @@ echo "KEYMAP=us" > /etc/vconsole.conf
 echo "FONT=ter-216n" >> /etc/vconsole.conf
 
 # Create new initramfs (for system encryption)
-mkinitcpio -P
+mkinitcpio -p linux
 
 # Set root passwd
 passwd
